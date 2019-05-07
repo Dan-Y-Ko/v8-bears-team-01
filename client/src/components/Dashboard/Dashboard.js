@@ -7,7 +7,6 @@ import { get_user_projects, delete_project } from "../../actions/project";
 
 import RecentMessages from "./RecentMessages";
 import YourProjects from "./YourProjects";
-import JoinedProjects from "./JoinedProjects";
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -49,7 +48,6 @@ class Dashboard extends Component {
                         />
                     </div>
                 )}
-                <JoinedProjects />
             </div>
         );
     }
