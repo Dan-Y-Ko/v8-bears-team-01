@@ -237,3 +237,11 @@
   max-height: 112px;
   border-radius: 100%
 }
+
+.login-logo {
+  color: #6DD1CC;
+}
+
+.login-logo:hover {
+  color: #6DD1CC;
+}

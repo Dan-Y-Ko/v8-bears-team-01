@@ -52,7 +52,7 @@ const YourProjects = ({ project, handleDeleteClick }) => {
                                     {project.projectName}
                                 </h5>
                                 <p className="card-text">
-                                    <div class="overlay"></div>
+                                   
                                     {project.description}
                                 </p>
                                 <div className="d-flex flex-row justify-content-start">

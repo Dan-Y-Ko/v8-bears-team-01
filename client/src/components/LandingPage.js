@@ -27,7 +27,7 @@ const Project = props => {
             <div className="card-body">
                 <h5 className="card-title">{props.project.projectName}</h5>
                 <div className="card-text">
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                   {props.project.description}
                 </div>
             </div>
