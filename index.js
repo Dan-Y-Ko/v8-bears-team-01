@@ -55,5 +55,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 
 setInterval(function() {
-    http.get("https://damp-ocean-88180.herokuapp.com/");
+    https.get("https://damp-ocean-88180.herokuapp.com/");
 }, 300000);
