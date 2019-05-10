@@ -13,7 +13,8 @@ class ProjectPage extends Component {
             messageBody: "",
             contactModalIsActive: false,
             status: "",
-            role: "developer"
+            role: "developer",
+            loading: false
         };
     }
 
@@ -68,12 +69,17 @@ class ProjectPage extends Component {
     };
 
     componentDidMount() {
+        this.setState({loading: true})
         window.scrollTo(0, 0);
         var that = this;
         this.props.getProject(this.props.match.params.id, function(data) {
             that.setState({ project: data });
         });
         this.props.fetchUser()
+                  .then(()=>{
+                      setTimeout( this.setState({loading: false}), 2000)
+                   
+                  })
     }
     render() {
         const { project } = this.props;
@@ -84,15 +90,15 @@ class ProjectPage extends Component {
             bucket_url = `https://s3.us-east-2.amazonaws.com/code-collab-image`;
         }
         return (
-            <div>
-                <div className="py-5 text-white">
+            <div>{ this.state.loading ? <p>loading...</p>:
+                (<div className="py-5 text-white">
                     <div className="mx-auto col-md-10">
                         {!!this.state.success && this.displaySuccessMesage()}
                         <div className="project-container row">
                             <div className="col-sm-8 col-md-8 col-lg-8">
                                 <img
                                     className="project-page-img"
-                                    src={!!project && project.projectName 
+                                    src={ !this.state.loading
                                       ? project.imageUrl?`${bucket_url}/${project.imageUrl}`:"https://via.placeholder.com/100"
                                       : "https://i.imgur.com/nZ22mf9.jpg"
                                     }
@@ -100,20 +106,20 @@ class ProjectPage extends Component {
                             </div>
                             <div className="col-sm-4 col-md-4 col-lg-4">
                                 <h1 className="text-light">
-                                    {!!project && project.projectName
+                                    { !this.state.loading
                                         ? project.projectName
                                         : ""}
                                 </h1>
                                 <p className="mb-4 lead text-light">
                                    <b>Created by:</b>{" "}
-                                    {!!project && project.ownerName
+                                    {!this.state.loading
                                         ? project.ownerName
                                         : ""}
                                 </p>
 
                                 <p className="mb-4 lead text-light">
                                     <b>Description:</b>{" "}
-                                    {!!project && project.ownerName
+                                    { !this.state.loading
                                         ? project.description
                                         : ""}
                                 </p>
@@ -127,7 +133,7 @@ class ProjectPage extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>)}
                 <ContactModal
                     isOpen={this.state.contactModalIsActive}
                     handleRequestClose={this.handleRequestClose}
