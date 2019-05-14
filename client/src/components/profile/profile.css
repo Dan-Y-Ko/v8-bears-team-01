@@ -8,10 +8,11 @@
   width: 250px;
   top: 35vh;
   left: 0;
-  height: 50vh;
+  height: 55vh;
   background: #343A40;
   position: absolute;
   padding-top: 6px;
+  border-radius: 6px;
 }
 
 .sidebar a {
@@ -48,7 +49,7 @@
 
 .profile-content {
   position: absolute;
-  left: 250px;
+  left: 20%;
   height: 58.5%;
   width: 80%;
   padding: 25px;

@@ -27,17 +27,26 @@ export class Navbar extends Component {
     profile: false,
     home: false,
     currentInput: 'dashboard',
+    login: false
   };
 
   componentDidMount() {
-     let str = this.props.history.location.pathname;
-     let arr =  str.split('/')
-     let name = arr[arr.length-1]
-     if(name=='about') name='profile'
-     if(name=='/') name='home'
-     if(str==="/") name="home"
-
-     this.updateSelected(name)
+    if (window.performance) {
+      console.info("window.performance works fine on this browser");
+    }
+      if (performance.navigation.type == 1 && this.state.login) {
+        //console.info( "This page is reloaded" );
+        let str = this.props.history.location.pathname;
+        let arr =  str.split('/')
+        let name = arr[arr.length-1]
+        if(name=='about') name='profile'
+        if(name=='/') name='home'
+        if(str==="/") name="home"
+   
+        this.updateSelected(name)
+      } else {
+       // console.info( "This page is not reloaded");
+      }
 
   }
 
@@ -104,6 +113,7 @@ export class Navbar extends Component {
         this.setState({errMessage: '', loginIsActive: false});
         localStorage.setItem('authToken', resp.data.token);
         this.props.fetchUser().then((resp) => {
+          this.setState({login: true})
           this.props.history.push('/dashboard');
         });
         // window.location.assign("/");
@@ -152,21 +162,22 @@ export class Navbar extends Component {
   };
 
   handleLogout = () => {
-      this.setState({home: false,dashboard: true,profile: false, currentInput: 'dashboard'})
     //send token object while logging out
     axios
-      .get('/api/logout', {
+    .get('/api/logout', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
       })
       .then((resp) => {
+        this.setState({login: false})
         localStorage.removeItem('authToken');
         this.props.history.push('/');
       })
       .catch((err) => {
         console.log(err);
       });
+      this.setState({home: false,dashboard: true,profile: false, currentInput: 'dashboard'})
   };
   clearFields = () => {
     this.setState({
